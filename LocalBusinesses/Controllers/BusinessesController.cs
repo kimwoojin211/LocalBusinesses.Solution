@@ -8,6 +8,7 @@ using LocalBusinesses.Models;
 
 namespace LocalBusinesses.Controllers
 {
+  [ApiVersionNeutral]
   [Route("api/[controller]")]
   [ApiController]
   public class BusinessesController : ControllerBase
