@@ -47,5 +47,37 @@ namespace LocalBusinesses.Controllers
 
       return business;
     }
+
+    // PUT: api/Businesses/{#}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Business business, string user_name)
+    {
+      if (id != business.BusinessId)
+      {
+        return BadRequest();
+      }
+      _db.Entry(business).State = EntityState.Modified;
+
+      try
+      {
+        await _db.SaveChangesAsync();
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        if (!BusinessExists(id))
+        {
+          return NotFound();
+        }
+        else
+        {
+          throw;
+        }
+      }
+      return NoContent();
+    }
+    private bool BusinessExists(int id)
+    {
+      return _db.Businesses.Any(e => e.BusinessId == id);
+    }
   }
 }
