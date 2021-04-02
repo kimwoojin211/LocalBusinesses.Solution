@@ -17,12 +17,30 @@ namespace LocalBusinesses.Controllers
     {
       _db = db;
     }
-
     // GET api/businesses
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Business>>> Get()
+    public async Task<ActionResult<IEnumerable<Business>>> Get(string name, string category, string hoursOpen, string hoursClose, string openNow)
     {
-      return await _db.Businesses.ToListAsync();
+      var query = _db.Messages.AsQueryable();
+      if (name != null)
+      {
+        query = query.Where(entry => entry.Name == name);
+      }
+      if (category != null)
+      {
+        query = query.Where(entry => entry.Category == category);
+      }
+      // looking if shop is open at 8:00am (hoursopen), returns business if HoursOpen is before or at hoursopen
+      if (hoursopen != null)
+      {
+        query = query.Where(entry => entry.HoursOpen >= hoursopen);
+      }
+      // looking if shop is closed at 5:00pm (hoursclose), returns business if HoursClose is before or at hoursclose
+      if (hoursclose != null)
+      {
+        query = query.Where(entry => entry.HoursClose >= hoursclose);
+      }
+      return await query.ToListAsync();
     }
 
     // POST api/Businesses
@@ -94,3 +112,13 @@ namespace LocalBusinesses.Controllers
     }
   }
 }
+// {
+//   "businessid": 1,
+//     "name": "Mom's Spaghetti",
+//     "category": "Restaurant",
+//     "ownedby": "Mom Mom",
+//     "address": "1 Mom st.",
+//     "phonenumber": "180000081",
+//     "hoursopen": "11:00AM",
+//     "hoursclose": "12:00AM"
+// }
