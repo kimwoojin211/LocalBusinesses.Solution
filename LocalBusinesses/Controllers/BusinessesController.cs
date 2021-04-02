@@ -19,7 +19,7 @@ namespace LocalBusinesses.Controllers
     }
     // GET api/businesses
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Business>>> Get(string name, string category, string hoursOpen, string hoursClose)
+    public async Task<ActionResult<IEnumerable<Business>>> Get(string name, string category, string hoursOpen, string hoursClose,string page, string pageSize)
     {
       var query = _db.Businesses.AsQueryable();
       if (name != null)
@@ -45,6 +45,12 @@ namespace LocalBusinesses.Controllers
       {
         query = query.Where(entry => String.Compare(entry.HoursClose, hoursClose) <= 0);
       }
+      if (page != null)
+      {
+        int size = (pageSize == null ? 50 : Int32.Parse(pageSize));
+        query = query.OrderBy(business => business.BusinessId).Skip((int.Parse(page) - 1) * size).Take(size);
+      }
+
       return await query.ToListAsync();
     }
 
