@@ -19,9 +19,9 @@ namespace LocalBusinesses.Controllers
     }
     // GET api/businesses
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Business>>> Get(string name, string category, string hoursOpen, string hoursClose, string openNow)
+    public async Task<ActionResult<IEnumerable<Business>>> Get(string name, string category, string hoursOpen, string hoursClose)
     {
-      var query = _db.Messages.AsQueryable();
+      var query = _db.Businesses.AsQueryable();
       if (name != null)
       {
         query = query.Where(entry => entry.Name == name);
@@ -30,15 +30,20 @@ namespace LocalBusinesses.Controllers
       {
         query = query.Where(entry => entry.Category == category);
       }
-      // looking if shop is open at 8:00am (hoursopen), returns business if HoursOpen is before or at hoursopen
-      if (hoursopen != null)
+      // looking if shop is open at 8:00am (hoursopen), returns business if HoursOpen is before or at hoursopen (military time)
+      if (hoursOpen != null)
       {
-        query = query.Where(entry => entry.HoursOpen >= hoursopen);
+        System.Console.WriteLine($"hoursOpen = {hoursOpen}");
+        foreach(Business business in query.ToList())
+        {  
+          System.Console.WriteLine($"entry.HoursOpen = {business.HoursOpen}");
+        }
+        query = query.Where(entry => String.Compare(entry.HoursOpen, hoursOpen)<=0);
       }
-      // looking if shop is closed at 5:00pm (hoursclose), returns business if HoursClose is before or at hoursclose
-      if (hoursclose != null)
+      // looking if shop is closed at 5:00pm (hoursclose), returns business if HoursClose is before or at hoursclose (military time)
+      if (hoursClose != null)
       {
-        query = query.Where(entry => entry.HoursClose >= hoursclose);
+        query = query.Where(entry => String.Compare(entry.HoursClose, hoursClose) <= 0);
       }
       return await query.ToListAsync();
     }
@@ -112,13 +117,3 @@ namespace LocalBusinesses.Controllers
     }
   }
 }
-// {
-//   "businessid": 1,
-//     "name": "Mom's Spaghetti",
-//     "category": "Restaurant",
-//     "ownedby": "Mom Mom",
-//     "address": "1 Mom st.",
-//     "phonenumber": "180000081",
-//     "hoursopen": "11:00AM",
-//     "hoursclose": "12:00AM"
-// }
