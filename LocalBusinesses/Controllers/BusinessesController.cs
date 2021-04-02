@@ -50,7 +50,7 @@ namespace LocalBusinesses.Controllers
 
     // PUT: api/Businesses/{#}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Business business, string user_name)
+    public async Task<IActionResult> Put(int id, Business business)
     {
       if (id != business.BusinessId)
       {
@@ -75,6 +75,19 @@ namespace LocalBusinesses.Controllers
       }
       return NoContent();
     }
+    // DELETE: api/Businesses/1
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBusiness(int id)
+    {
+      var business = await _db.Businesses.FindAsync(id);
+      if (business == null)
+      {
+        return NotFound();
+      }
+        _db.Businesses.Remove(business);
+        await _db.SaveChangesAsync();
+        return NoContent();
+    }    
     private bool BusinessExists(int id)
     {
       return _db.Businesses.Any(e => e.BusinessId == id);
