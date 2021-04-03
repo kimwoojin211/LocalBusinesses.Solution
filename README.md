@@ -5,7 +5,7 @@
 #### By **Woo Jin Kim**
 
 ## Technologies Used
-----
+
 * _C#_
 * _.NET 5.0.102_
 * _ASP.NET Core MVC 4.8_
@@ -17,7 +17,6 @@
 * _Swashbuckle_
 
 ## Description
-----
 _Creates an API on a local machine that access a database containing information on local businesses. API includes:_
 
 * Full CRUD functionality, successfully returning responses to API calls
@@ -26,7 +25,6 @@ _Creates an API on a local machine that access a database containing information
 * Swagger
 
 ## Setup/Installation Requirements
-----
 
 _Note: Make sure you have **.NET 5.0** installed. If not, please visit [this link](https://dotnet.microsoft.com/download/dotnet/5.0)_
 
