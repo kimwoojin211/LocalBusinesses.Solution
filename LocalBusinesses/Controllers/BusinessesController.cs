@@ -31,17 +31,10 @@ namespace LocalBusinesses.Controllers
       {
         query = query.Where(entry => entry.Category == category);
       }
-      // looking if shop is open at 8:00am (hoursopen), returns business if HoursOpen is before or at hoursopen (military time)
       if (hoursOpen != null)
       {
-        System.Console.WriteLine($"hoursOpen = {hoursOpen}");
-        foreach(Business business in query.ToList())
-        {  
-          System.Console.WriteLine($"entry.HoursOpen = {business.HoursOpen}");
-        }
         query = query.Where(entry => String.Compare(entry.HoursOpen, hoursOpen)<=0);
       }
-      // looking if shop is closed at 5:00pm (hoursclose), returns business if HoursClose is before or at hoursclose (military time)
       if (hoursClose != null)
       {
         query = query.Where(entry => String.Compare(entry.HoursClose, hoursClose) <= 0);
