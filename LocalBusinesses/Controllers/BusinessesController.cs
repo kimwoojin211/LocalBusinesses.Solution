@@ -41,7 +41,7 @@ namespace LocalBusinesses.Controllers
       }
       if (page != null)
       {
-        int size = (pageSize == null ? 50 : Int32.Parse(pageSize));
+        int size = (pageSize == null ? 20 : Int32.Parse(pageSize));
         query = query.OrderBy(business => business.BusinessId).Skip((int.Parse(page) - 1) * size).Take(size);
       }
 

@@ -40,7 +40,7 @@ namespace LocalBusinesses
               },
               License = new OpenApiLicense
               {
-                  Name = "Use under MIT",
+                  Name = "MIT License",
                   Url = new Uri("https://https://opensource.org/licenses/MIT"),
               }
           });
@@ -65,9 +65,10 @@ namespace LocalBusinesses
         app.UseHsts();
       }
       app.UseSwagger();
-      app.UseSwaggerUI(c =>
+      app.UseSwaggerUI(swagger =>
       {
-          c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        swagger.RoutePrefix = string.Empty;
       });
 
       app.UseRouting();
