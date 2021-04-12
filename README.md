@@ -1,4 +1,4 @@
-# Local Businesses
+# Local Businesses API V1.0
 
 #### _A C#/.NET program that creates an API to access a database of local businesses._
 
@@ -68,6 +68,7 @@ For further help on database configuration, please see [here](https://www.learnh
 ----
   _Note: This application features [Swagger](swagger.io). To view the documentation on SwaggerUI, please ensure the application is running (run the command `dotnet run` in the terminal) and open [this link](http://localhost:5000/swagger/index.html) in your browser._
 
+Version: 1.0
 ### <ul><li> **Base URL** </ul></li> 
 ```
 http://localhost/5000 
